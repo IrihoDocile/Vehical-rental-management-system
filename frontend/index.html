@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveNow | Vehicle Rental</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">Drive<span>Now</span></a>
+    <nav><a href="#fleet">Our Fleet</a><a href="#booking">Book a Vehicle</a><a href="#admin">Admin</a></nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">YOUR JOURNEY STARTS HERE</p>
+      <h1>Find the right ride<br>for every journey.</h1>
+      <p>Reliable vehicles, simple booking and flexible rental options.</p>
+      <a class="primary-link" href="#fleet">Explore vehicles</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="fleet" class="section">
+      <div class="section-heading"><div><p class="eyebrow">CHOOSE YOUR RIDE</p><h2>Available vehicles</h2></div><button class="outline" onclick="loadVehicles()">Refresh fleet</button></div>
+      <div id="vehicles" class="vehicle-grid"><p>Loading vehicles...</p></div>
+    </section>
+
+    <section id="booking" class="section booking-section">
+      <div><p class="eyebrow">RESERVE ONLINE</p><h2>Book your vehicle</h2><p>Send a rental request. The administrator will review your booking.</p></div>
+      <form id="bookingForm" class="panel">
+        <label>Full name<input name="customer_name" required placeholder="Your name"></label>
+        <label>Email address<input name="customer_email" type="email" required placeholder="you@example.com"></label>
+        <label>Vehicle<select name="vehicle_id" id="vehicleSelect" required><option value="">Select a vehicle</option></select></label>
+        <div class="form-row"><label>Start date<input name="start_date" type="date" required></label><label>End date<input name="end_date" type="date" required></label></div>
+        <button class="primary" type="submit">Submit booking request</button>
+        <p id="bookingMessage" class="message"></p>
+      </form>
+    </section>
+
+    <section id="admin" class="section admin-section">
+      <div class="section-heading"><div><p class="eyebrow">MANAGEMENT</p><h2>Admin dashboard</h2></div><button class="outline" onclick="loadBookings()">Refresh bookings</button></div>
+      <div class="admin-grid">
+        <form id="vehicleForm" class="panel">
+          <h3>Add a vehicle</h3>
+          <label>Vehicle name<input name="name" required placeholder="e.g. Toyota Corolla"></label>
+          <label>Vehicle type<input name="type" required placeholder="Sedan, SUV, Van..."></label>
+          <label>Price per day (RWF)<input name="price_per_day" type="number" min="1" required></label>
+          <label>Image URL (optional)<input name="image_url" type="url" placeholder="https://..."></label>
+          <button class="primary" type="submit">Add vehicle</button><p id="vehicleMessage" class="message"></p>
+        </form>
+        <div class="panel"><h3>Rental bookings</h3><div class="table-wrap"><table><thead><tr><th>Customer</th><th>Vehicle</th><th>Dates</th><th>Status</th><th>Action</th></tr></thead><tbody id="bookingRows"><tr><td colspan="5">Loading bookings...</td></tr></tbody></table></div></div>
+      </div>
+      <p class="notice">Demo note: the admin dashboard is not password-protected. Add authentication and authorization before using this system in a real business.</p>
+    </section>
+  </main>
+  <footer>© 2026 DriveNow Vehicle Rental Management System</footer>
+  <script src="app.js"></script>
+</body>
+</html>

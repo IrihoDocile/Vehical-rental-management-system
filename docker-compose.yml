@@ -1,0 +1,50 @@
+services:
+  frontend:
+    build: ./frontend
+    image: vehicle-rental-frontend:1.0
+    container_name: vehicle-rental-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    image: vehicle-rental-backend:1.0
+    container_name: vehicle-rental-backend
+    environment:
+      PORT: 5000
+      DB_HOST: db
+      DB_USER: rental_user
+      DB_PASSWORD: rental_pass
+      DB_NAME: vehicle_rental
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    container_name: vehicle-rental-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: vehicle_rental
+      MYSQL_USER: rental_user
+      MYSQL_PASSWORD: rental_pass
+    volumes:
+      - rental_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot_pass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+volumes:
+  rental_data:
